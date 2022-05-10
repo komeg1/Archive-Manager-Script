@@ -1,12 +1,11 @@
 
 packMenu(){
-<<<<<<< HEAD
     PLIK=$(dialog --stdout --ok-button "DODAJ" --cancel-button "UTWORZ" --fselect ./ 0 0 0)	
 	EXIT=$?
 	if [[ -z $PLIK ]]; then
 		PLIK=$(pwd)
 	fi
-=======
+
     FILES=$(dialog --stdout --ok-button "DODAJ" --cancel-button "UTWORZ" --fselect ./ 0 0 0)	
 	if [ $? -eq 0 ]; then
 		FILE_LIST+=($FILES)
@@ -110,5 +109,5 @@ if [ ${#FILE_LIST[@]} -eq 1 ]; then
 }
 toRar(){
 	rar a $DIR_NAME.rar ${FILE_LIST[@]}
->>>>>>> b3c0c86 (master)
+
 }
