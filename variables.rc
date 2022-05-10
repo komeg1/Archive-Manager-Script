@@ -1,0 +1,4 @@
+MENU_OPTS=(1 "Pack"
+         2 "Unpack"
+         3 "Exit"
+)
