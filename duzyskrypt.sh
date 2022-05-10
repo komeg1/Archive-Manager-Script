@@ -1,9 +1,15 @@
 #!/bin/bash
-#Author: Tomasz Krezymon
-#Created On: 05.05.2022
-#Version: 0.1
-#Description:
-#Pakowanie i rozpakowywanie plików w dialogu.
+# Author           : Tomasz Krezymon ( tomekkrezymon@gmail.com )
+# Created On       : 10.05.2022
+# Last Modified By : Tomasz Krezymon ( tomekkrezymon@gmail.com )
+# Last Modified On : 12.05.2022
+# Version          : v0.03
+#
+# Description      :
+# Opis
+#
+# Licensed under GPL (see /usr/share/common-licenses/GPL for more details
+# or contact # the Free Software Foundation for a copy)
 
 
 . variables.rc #stale zmienne
@@ -11,9 +17,7 @@
 . unpack.sh #funkcje dot. rozpakowywania
 
 
-cmd=(dialog --keep-tite --menu "Select options:" 30 30 30)
-
-CHOICES=$("${cmd[@]}" "${MENU_OPTS[@]}" 2>&1 >/dev/tty)
+CHOICES=$(dialog --keep-tite --menu "Select option:" 30 30 30 "${MENU_OPTS[@]}" 2>&1 >/dev/tty)
 
 for CHOICE in $CHOICES
 do
