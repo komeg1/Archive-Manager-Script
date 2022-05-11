@@ -1,30 +1,40 @@
 
 packMenu(){
-    PLIK=$(dialog --stdout --ok-button "DODAJ" --cancel-button "UTWORZ" --fselect ./ 0 0 0)	
-	EXIT=$?
-	if [[ -z $PLIK ]]; then
-		PLIK=$(pwd)
-	fi
-
-    FILES=$(dialog --stdout --ok-button "DODAJ" --cancel-button "UTWORZ" --fselect ./ 0 0 0)	
+	FILE=$($DIALOG_CHOOSE_FILE)
 	if [ $? -eq 0 ]; then
-		FILE_LIST+=($FILES)
+		
+		if [ $FILE == "./" ]; then
+			ERR=$(dialog --stdout --ok-button "Powrot" --msgbox "Nie mozna dodac \""$FILE"\"" 8 30)
+			if [ $? -eq 0 ]; then
+				packMenu
+			fi
+		fi
+		FILE_LIST+=($FILE)
 		packMenu
 		
 	else
-		chooseExtension
+		if [ ${#FILE_LIST[@]} -gt 0 ]; then
+			chooseExtension
+		else
+			clear
+			ERR=$(dialog --stdout --ok-button "Powrot" --msgbox "Nie wybrano zadnych plikow." 8 30)
+			if [ $? -eq 0 ]; then
+				packMenu
+			fi
+			
+		fi
 	fi
 }
 
 getArchiveName(){
 	clear
-	DIR_NAME=$(dialog --stdout --inputbox "Podaj nazwe archiwum (NIE DLA JEDNEGO PLIKU BZ2 I GZ)" 0 0)	
+	DIR_NAME=$($DIALOG_ARCHIVE_NAME)
 }
 
 chooseExtension(){
 	clear
-	EXT_CHOICES=$(dialog --keep-tite --menu "Wybierz rozszerzenie:" 30 30 30 "${EXT_OPTS[@]}" 2>&1 >/dev/tty)
-	for CHOICE in $EXT_CHOICES
+	EXT_CHOICE=$($DIALOG_EXTENSION_CHOICE)
+	for CHOICE in $EXT_CHOICE
 do
     case $CHOICE in
         1)
@@ -74,6 +84,7 @@ pack(){
     	   toBz2
 		   ;;
     esac
+
 }
 
 toZip()
