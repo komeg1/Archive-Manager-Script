@@ -15,10 +15,22 @@
 . variables.rc #stale zmienne
 . pack.sh #funkcje dot. pakowania
 . unpack.sh #funkcje dot. rozpakowywania
+. opts.sh
+while getopts "hva" OPT; do
+	case $OPT in
+		h) help; ;;
+		v) version; ;;
+		a) author; ;;
+		*) echo "brak funkcji";;
+	esac
+	exit
+done
 
-
-CHOICES=$(dialog --keep-tite --menu "Select option:" 30 30 30 "${MENU_OPTS[@]}" 2>&1 >/dev/tty)
-
+CHOICES=$(dialog --keep-tite --menu "Wybierz opcje:" 30 30 30 "${MENU_OPTS[@]}" 2>&1 >/dev/tty)
+if [ $? -eq 1 ]; then
+    clear
+    exit
+fi
 for CHOICE in $CHOICES
 do
     case $CHOICE in
@@ -29,6 +41,7 @@ do
             unpackMenu
             ;; 
         3)
+            clear
             break 
             ;;
     esac

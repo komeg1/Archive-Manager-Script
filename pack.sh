@@ -1,6 +1,6 @@
 
 packMenu(){
-	FILE=$($DIALOG_CHOOSE_FILE)
+	FILE=$(dialog --stdout --ok-button "DODAJ" --cancel-button "UTWORZ" --fselect ./ 0 0 0)
 	if [ $? -eq 0 ]; then
 		
 		if [ $FILE == "./" ]; then
@@ -14,6 +14,7 @@ packMenu(){
 		
 	else
 		if [ ${#FILE_LIST[@]} -gt 0 ]; then
+			
 			chooseExtension
 		else
 			clear
@@ -28,15 +29,13 @@ packMenu(){
 
 getArchiveName(){
 	clear
-	DIR_NAME=$($DIALOG_ARCHIVE_NAME)
+	DIR_NAME=$(dialog --stdout --inputbox "Podaj nazwe archiwum" 0 0)
 }
 
 chooseExtension(){
 	clear
-	EXT_CHOICE=$($DIALOG_EXTENSION_CHOICE)
-	for CHOICE in $EXT_CHOICE
-do
-    case $CHOICE in
+	EXT_CHOICE=$(dialog --keep-tite --menu "Wybierz rozszerzenie:" 30 30 30 "${EXT_OPTS[@]}" 2>&1 >/dev/tty)
+    case $EXT_CHOICE in
         1)
 			EXT="zip"
 			;;
@@ -53,7 +52,6 @@ do
     	   EXT="bz2"
 		   ;;
     esac
-done
 	pack
 }
 
@@ -72,51 +70,54 @@ pack(){
     	   toTar
 		   ;;
 		"gz")
-		   if [ ${#FILE_LIST[@]} -gt 1 ]; then
+		   #if [ ${#FILE_LIST[@]} -gt 1 ]; then
 		   	getArchiveName
-		   fi
+		   #fi
     	   toGz
 		   ;;
 		"bz2")
-		   if [ ${#FILE_LIST[@]} -gt 1 ]; then
+		  # if [ ${#FILE_LIST[@]} -gt 1 ]; then
 		   	getArchiveName
-		   fi
+		   #fi
     	   toBz2
 		   ;;
     esac
+	./duzyskrypt.sh
 
 }
 
 toZip()
 {
 	zip $DIR_NAME ${FILE_LIST[@]}
+	rm $DIR_NAME
 }
 
 toTar()
 {
 	tar -cvzf $DIR_NAME.tar ${FILE_LIST[@]}
+	rm $DIR_NAME
 }
 
 #Aby stworzyć archiwum .gz/.bzip2 kilku plikow naraz najpierw kompresuje je do .tar
 toGz(){ 
-	if [ ${#FILE_LIST[@]} -eq 1 ]; then
-		gzip -k ${FILE_LIST[@]}
+	#if [ ${#FILE_LIST[@]} -eq 1 ]; then
+	#	gzip -k ${FILE_LIST[@]}
 		#mv ${FILE_LIST[@]}.gz $DIR_NAME.gz
-	else
+	#else
 		toTar
 		gzip $DIR_NAME.tar
-	fi
+	#fi
 
 } 
 
 toBz2(){
-if [ ${#FILE_LIST[@]} -eq 1 ]; then
-		bzip2 -k ${FILE_LIST[@]}
+#if [ ${#FILE_LIST[@]} -eq 1 ]; then
+#		bzip2 -k ${FILE_LIST[@]}
 		#mv ${FILE_LIST[@]}.gz $DIR_NAME.gz
-	else
+	#else
 		toTar
 		bzip2 $DIR_NAME.tar
-	fi
+	#fi
 }
 toRar(){
 	rar a $DIR_NAME.rar ${FILE_LIST[@]}

@@ -15,9 +15,6 @@ FILE_LIST=()
 DIR_NAME=""
 EXT="zip"
 EXT_CHOICES=1
+FILENAME=""
+FILENAME2=""
 
-
-#DIALOG_NO_FILES_SELECTED_ERR="dialog --stdout --ok-button "Powrot" --msgbox "Nie wybrano zadnych plikow." 8 30"
-DIALOG_ARCHIVE_NAME="dialog --stdout --inputbox "Podaj nazwe archiwum" 0 0"
-DIALOG_EXTENSION_CHOICE="dialog --keep-tite --menu "Wybierz rozszerzenie:" 30 30 30 "${EXT_OPTS[@]}" 2>&1 >/dev/tty"
-DIALOG_CHOOSE_FILE="dialog --stdout --ok-button "DODAJ" --cancel-button "UTWORZ" --fselect ./ 0 0 0"
