@@ -7,9 +7,9 @@
 .SH DESCRIPTION
     The script let user compress and decompress files. Available extensions: zip, rar, tar, gz, bzip2
 .SH OPTIONS
-    -h - opis programu
-    -v - wersja programu
-    -a - autor
+    -h - program description
+    -v - version 1.0
+    -a - author: tomasz krezymon
 .SH BUGS
 No known bugs.
 .SH AUTHOR
