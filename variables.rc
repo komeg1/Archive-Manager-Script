@@ -1,6 +1,6 @@
-MENU_OPTS=(1 "Pack"
-           2 "Unpack"
-           3 "Exit")
+MENU_OPTS=(1 "PACK"
+           2 "UNPACK"
+           3 "EXIT")
 
 EXT_OPTS=(1 "zip"
          2 "rar"
@@ -8,8 +8,8 @@ EXT_OPTS=(1 "zip"
          4 "gz"
          5 "bz2")
 
-UNPACK_OPTS=(1 "Nowy folder"
-             2 "Istniejacy folder")
+UNPACK_OPTS=(1 "NEW FOLDER"
+             2 "EXISTING FOLDER")
 
 FILE_LIST=()
 DIR_NAME=""

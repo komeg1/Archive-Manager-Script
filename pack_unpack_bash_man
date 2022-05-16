@@ -1,0 +1,18 @@
+./" Manpage for your script
+.TH man 1 "16 May 2022" "1.0" "pack_unpack_bash man page"
+.SH NAME
+    pack_unpack_bash - script for compressing and decompressing archives using dialog
+.SH SYNOPSIS
+    ./pack_unpack_bash
+.SH DESCRIPTION
+    The script let user compress and decompress files. Available extensions: zip, rar, tar, gz, bzip2
+.SH OPTIONS
+    -h - opis programu
+    -v - wersja programu
+    -a - autor
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+written by Tomasz Krezymon - github.com/komeg1
+.SH REPORTING BUGS
+/komeg1/pack_unpack_bash

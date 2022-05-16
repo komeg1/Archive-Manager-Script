@@ -16,7 +16,7 @@ unpackMenu(){
 
 createNewDir(){
     clear
-    NEW_DIR_NAME=$(dialog --stdout --inputbox "Podaj nazwe nowego archiwum" 0 0)
+    NEW_DIR_NAME=$(dialog --stdout --inputbox "Input archive name" 0 0)
     if [ $? -eq 1 ]; then
         unpackMenu
     fi
@@ -45,13 +45,13 @@ findExtension(){
         EXT2=$(echo $FILENAME | cut -d "." -f 2)
 
     else
-        ERR=$(dialog --stdout --msgbox "Wybrano zle archiwum" 30 30)
+        ERR=$(dialog --stdout --msgbox "Wrong archive" 30 30)
         unpack
     fi
 }
 
 unpack(){
-    FILE=$(dialog --stdout --ok-button "WYPAKUJ" --cancel-button "" --fselect ./ 0 0 0)	
+    FILE=$(dialog --stdout --ok-button "UNPACK" --cancel-button "" --fselect ./ 0 0 0)	
     FILENAME=$(basename $FILE)
     findExtension
     case $EXT in
@@ -71,7 +71,7 @@ unpack(){
         unpackBz2
 		;;
     esac
-    ALERT=$(dialog --stdout --msgbox "Wypakowano poprawnie do folderu $DIR_NAME" 30 30)
+    ALERT=$(dialog --stdout --msgbox "Unpacked properly to $DIR_NAME" 30 30)
     ./duzyskrypt.sh
 }
 

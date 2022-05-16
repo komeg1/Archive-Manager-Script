@@ -1,10 +1,10 @@
 
 packMenu(){
-	FILE=$(dialog --stdout --ok-button "DODAJ" --cancel-button "UTWORZ" --fselect ./ 0 0 0)
+	FILE=$(dialog --stdout --ok-button "ADD" --cancel-button "CREATE" --fselect ./ 0 0 0)
 	if [ $? -eq 0 ]; then
 		
 		if [ $FILE == "./" ]; then
-			ERR=$(dialog --stdout --ok-button "Powrot" --msgbox "Nie mozna dodac \""$FILE"\"" 8 30)
+			ERR=$(dialog --stdout --ok-button "Back" --msgbox "Can't add \""$FILE"\"" 8 30)
 			if [ $? -eq 0 ]; then
 				packMenu
 			fi
@@ -18,7 +18,7 @@ packMenu(){
 			chooseExtension
 		else
 			clear
-			ERR=$(dialog --stdout --ok-button "Powrot" --msgbox "Nie wybrano zadnych plikow." 8 30)
+			ERR=$(dialog --stdout --ok-button "Back" --msgbox "Did not choose any file" 8 30)
 			if [ $? -eq 0 ]; then
 				packMenu
 			fi
@@ -70,15 +70,11 @@ pack(){
     	   toTar
 		   ;;
 		"gz")
-		   #if [ ${#FILE_LIST[@]} -gt 1 ]; then
-		   	getArchiveName
-		   #fi
+		   getArchiveName
     	   toGz
 		   ;;
 		"bz2")
-		  # if [ ${#FILE_LIST[@]} -gt 1 ]; then
-		   	getArchiveName
-		   #fi
+		   getArchiveName
     	   toBz2
 		   ;;
     esac
@@ -98,26 +94,18 @@ toTar()
 	rm $DIR_NAME
 }
 
-#Aby stworzyć archiwum .gz/.bzip2 kilku plikow naraz najpierw kompresuje je do .tar
 toGz(){ 
-	#if [ ${#FILE_LIST[@]} -eq 1 ]; then
-	#	gzip -k ${FILE_LIST[@]}
-		#mv ${FILE_LIST[@]}.gz $DIR_NAME.gz
-	#else
+
 		toTar
 		gzip $DIR_NAME.tar
-	#fi
+
 
 } 
 
 toBz2(){
-#if [ ${#FILE_LIST[@]} -eq 1 ]; then
-#		bzip2 -k ${FILE_LIST[@]}
-		#mv ${FILE_LIST[@]}.gz $DIR_NAME.gz
-	#else
+
 		toTar
 		bzip2 $DIR_NAME.tar
-	#fi
 }
 toRar(){
 	rar a $DIR_NAME.rar ${FILE_LIST[@]}
